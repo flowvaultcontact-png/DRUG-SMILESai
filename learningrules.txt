@@ -1,0 +1,2 @@
+1:   Learning Rule (Plasticity):
+    Δw = (((0.0 / (jnp.abs(ctx['mem']) + 1e-8)) * ctx['post']) + ((0.0 / (jnp.abs(0.0) + 1e-8)) - (ctx['err'] - ctx['reward']))) 
