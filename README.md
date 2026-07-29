@@ -148,8 +148,8 @@ Tested on:
 ## Quick start
 
 ```bash
-git clone https://github.com/<your-user>/generative-drug-discovery.git
-cd generative-drug-discovery
+git clone https://github.com/flowvaultcontact-png/DRUG-SMILESai.git
+cd DRUG-SMILESai
 echo "Δw = -ctx['err']" > learningrules.txt   # plain gradient descent
 python customremedies.py
 ```
