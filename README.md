@@ -440,7 +440,7 @@ If this project is useful in your research, please cite:
 @misc{generative_drug_discovery_ai,
   title  = {Generative Drug Discovery AI: Rule-Driven Seq2Seq + SELFIES},
   author = {Stijn},
-  year   = {2025},
+  year   = {2026},
   url    = {https://github.com/flowvaultcontact-png/DRUG-SMILESai}
 }
 ```
