@@ -2,7 +2,7 @@
 
 An end-to-end, PC-runnable AI pipeline that reads a disease protein's amino-acid sequence and generates candidate drug molecules as SELFIES/SMILES, then puts each candidate through a 15-stage computational validation gauntlet (RDKit → ADMET → docking → MD → free energy).
 
-![Python](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11-blue)
+![Python](https://img.shields.io/badge/python-3.10.6-blue)
 ![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white)
 ![RDKit](https://img.shields.io/badge/RDKit-cheminformatics-green)
 ![SELFIES](https://img.shields.io/badge/representation-SELFIES-orange)
@@ -16,6 +16,7 @@ An end-to-end, PC-runnable AI pipeline that reads a disease protein's amino-acid
 - [Pipeline at a glance](#pipeline-at-a-glance)
 - [Repository structure](#repository-structure)
 - [Installation](#installation)
+- [Model checkpoints](#model-checkpoints)
 - [Quick start](#quick-start)
 - [The learning rule is not hardcoded](#the-learning-rule-is-not-hardcoded)
 - [customremedies.py — the generator](#customremediespy--the-generator)
@@ -62,9 +63,9 @@ On top of generation, we ship a complete validation story so candidates don't li
                 ┌──────────────────────────────────────────────────────────────┐
                 │                     customremedies.py                        │
                 │                                                              │
-   Protein AA ─▶│  ┌─────────┐    ┌──────────────────────┐    ┌──────────┐   │
-   sequence     │  │ AA Vocab│──▶ │  Transformer Encoder │──▶ │ Decoder  │   │
-   (≥10 AAs)    │  └─────────┘    └──────────────────────┘    └────┬─────┘   │
+   Protein AA ─▶│ ┌─────────┐     ┌──────────────────────┐   ┌──────────┐     │
+   sequence     │  │ AA Vocab│──▶ │  Transformer Encoder │──▶│ Decoder  │     │
+   (≥10 AAs)    │  └─────────┘    └──────────────────────┘    └────┬─────┘     │
                 │                                                    ▼         │
                 │                                          SELFIES tokens      │
                 │                                                    │         │
@@ -105,7 +106,7 @@ On top of generation, we ship a complete validation story so candidates don't li
 ├── learningrules.txt         # The plasticity rule (editable, hot-loaded)
 ├── remedy_workspace/
 │   ├── data/                 # Auto-generated training pairs
-│   └── checkpoints/          # drug_gpt.pth + training_log.json
+│   └── checkpoints/          # drug_gpt.pth + training_log.json — NOT in this repo, download separately (see Model checkpoints)
 └── README.md                 # You are here
 ```
 
@@ -142,8 +143,22 @@ pip install requests openmm meeko vina transformers
 Tested on:
 
 - Python 3.10.6
-- Windows 11 
+- Windows 11
 - CPU-only and CUDA 11.8+
+
+## Model checkpoints
+
+Trained weights are distributed separately from this repository — `remedy_workspace/checkpoints/` is not committed to git.
+
+To use a pre-trained model instead of training from scratch:
+
+1. Download `drug_gpt.pth` and `training_log.json` from the [Releases page](https://github.com/flowvaultcontact-png/DRUG-SMILESai/releases).
+2. Place both files in `remedy_workspace/checkpoints/` (create the folder if it doesn't exist).
+3. Run `python customremedies.py` — it will detect the checkpoint and skip straight to the interactive prompt.
+
+If no checkpoint is found, the script trains a new one from scratch on first run and saves it to that same folder.
+
+> Update the Releases link above if the checkpoints end up hosted somewhere else (e.g. Hugging Face, Google Drive) — GitHub Releases is just a sensible default for binary files like this.
 
 ## Quick start
 
