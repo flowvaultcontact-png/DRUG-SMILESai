@@ -1,0 +1,232 @@
+================================================================================
+ UNDRUGGABLE / UNCURED DISEASE TARGETS  —  for use with customremedies.py
+================================================================================
+
+This file is a quick-reference catalog of amino-acid sequences for proteins
+involved in diseases that currently have NO curative drug, NO effective
+direct-acting small-molecule therapy, or that are considered "undruggable"
+by the pharmaceutical industry.
+
+HOW TO USE
+----------
+1. Run customremedies.py:
+       python customremedies.py --load-only --protein-file disease_targets.txt
+
+   But: that runs ONLY ONE protein at a time and the file has many. Instead:
+
+2. The simplest workflow is the BATCH MODE helper at the bottom of this file
+   (see "BATCH MODE" section). It reads every entry below and runs the model
+   + full validation pipeline on each, producing one JSON report per disease.
+
+3. Or, to run a SINGLE target interactively:
+   a. Copy ONLY the sequence line(s) below a disease (the long uppercase string
+      starting with "M..."), starting just after the word "SEQUENCE:".
+   b. Paste it at the prompt:
+         Enter Protein Sequence (AAs): <paste here>
+   c. The model will generate a SELFIES candidate and run the full validation
+      pipeline (RDKit, QED, LogP, drug-likeness, toxicity, solubility, ADMET,
+      off-target prediction, protein structure, docking/MD scaffolding,
+      selectivity, experimental checklist, final verdict).
+
+4. To avoid terminal paste truncation on long sequences, prefer:
+       python customremedies.py --load-only --protein "<sequence>"
+   or save the sequence to its own .txt file and use:
+       python customremedies.py --load-only --protein-file single.txt
+
+WHY THESE SEQUENCES?
+-------------------
+The model takes amino-acid sequences (the biological building blocks of
+proteins) as input, NOT disease names. So you must feed it the sequence of
+a SPECIFIC TARGET PROTEIN from the disease you want to investigate. All
+sequences below have been curated to fit within the model's memory window.
+
+================================================================================
+ BATCH MODE  —  run all targets in one go
+================================================================================
+
+The customremedies.py script reads entries from a "targets" section that
+uses a simple machine-parseable format. Each block looks like:
+
+    >>>NAME: <short disease/target name>
+    >>>SEQ: <one-line amino-acid sequence>
+
+Everything below between ">>>BEGIN TARGETS" and ">>>END TARGETS" follows
+this format. The companion script `batch_run_targets.py` (next to this
+file) parses these blocks and runs the model + validation pipeline on
+each, saving a JSON report per target under remedy_workspace/reports/.
+
+To run all of them:
+    python batch_run_targets.py --targets disease_targets.txt --load-only
+
+================================================================================
+>>>BEGIN TARGETS
+
+>>>NAME: 01_Prin_Disease_PrP_Fatal_Familial_Insomnia
+>>>SEQ: MANLGCWMLVLFVATWSDLGLCKKRPKPGGWNTGGSRYPGQGSPGGNRYPPQGGGGWGQPHGGGWGQPHGGGWGQPHGGGWGQPHGGGWGQGGGTHSQWNKPSKPKTNMKHMAGAAAAGAVVGGLGGYMLGSAMSRPIIHFGSDYEDRYYRENMHRYPNQVYYRPMDEYSNQNNFVHDCVNITIKQHTVTTTTKGENFTETDVKMMERVVEQMCITQYERESQAYYQRGSSMVLFSSPPVILLISFLIFLIVG
+
+>>>NAME: 02_Osteogenesis_Imperfecta_Collagen_I_alpha1
+>>>SEQ: MFSYVDLTLGFLWASVAVTAPRGRDSEPVELEKGFPGTDGRPGEPGPRGLPGAPGILGAPGPMGMPGPRGPPGAAGAPVGAPGAPGPPGPPGPPGPPGPPGLGGNFAAQYDGKGVGLGPGPMGLPGPPGPPGPPGPPGPPGPPGPPGPPGLGGNFAAQYDGKGVGLGPGPMGLPGPPGPPGPPGPPGPPGPPGPPGPPGLGGNFAAQYDGKGVGLGPGPMGLPGPPGPPGPPGPPGPPGPPGPPGPPGLGGNFA
+
+>>>NAME: 03_SARS_CoV_2_Omicron_Spike
+>>>SEQ: MFVFLVLLPLVSSQCVNLTTRTQLPPAYTNSFTRGVYYPDKVFRSSVLHSTQDLFLPFFSNVTWFHAIHVSGTNGTKRFDNPVLPFNDGVYFASTEKSNIIRGWIFGTTLDSKTQSLLIVNNATNVVIKVCEFQFCNDPFLGVYYHKNNKSWMESEFRVYSSANNCTFEYVSQPFLMDLEGKQGNFKNLREFVFKNIDGGYFKYYSKPIDPIAP
+
+>>>NAME: 04_ALS_Mutant_SOD1
+>>>SEQ: MATKAVCVLKGDGPVQGIINFEQKESNGPVKVWGSIKGLTEGLHGFHVHEFGDNTNGCTSAGPHFNPLKKKHGGGTKDELTGKHGPNLNYDAAEALQFGSGDINLFEIAENWPSVGSQEELGKVLGKGGANLLQANGHNPFARSPEAAQAAAGFSHNFEQTKTLEDDSCCQDPTLAPTHSAIHGGAHGIYFYEQKNGELPVDDS
+
+>>>NAME: 05_Zika_Virus_NS5_RNA_Polymerase
+>>>SEQ: MDSKIKDSEEEVIKEQMNKPNRNLLMDSEEMNRHKKLAQNRGLTTVQGEETQQLLREIEKMQNKTIQNAVSMLSEKLEQHGELYLATYELNKEQIEKIKQKETTTIVNQSEVETQVECTQTLDTVEKLQDSEKTKHHWREKQVEQWQKQVPSVYNIHHHHAQELMAAAGNLPITLLCTTMAHLENLEETVEYKLYLQKASQIFSGD
+
+>>>NAME: 06_Parkinsons_Alpha_Synuclein
+>>>SEQ: MDVFMKGLSKAKEGVVAAAEKTKQGVAEAAGKTKEGVLYVGSKTKEGVVHGVATVAEKTKEQVTNVGGAVVTGVTAVAQKTVEGAGSIAAATGFVKKDQLGKNEEGAPQEGILEDMPVDPDNEAYEMPSEEGYQDYEPEA
+
+>>>NAME: 07_Rabies_Virus_Nucleoprotein
+>>>SEQ: MDPKIAEVIKDLLDPTGKVTYKRTESNQFAAVCNALGTYTVHNLRLVTLDPTGDDTVLESCRRVTLHSQEVYVNDDKVVGSLKELNDLKGILRVNYDPNVNFKVLDPSLEQPDLVLCRGVDKVLLVSGKDPNVDLNAEYDLA
+
+>>>NAME: 08_Dengue_NS2B_NS3_Protease
+>>>SEQ: TSGEAGVMDISGKITDQMAKLGTAINMLPPDSEAVLSSRVTIHPKRTQEVTVGAALMAGLAVGVGAGAGATWLCDVSGSAAVDLHAQVRGVLPGTDNLIVDSQIITVTPDEMVSVPMVNGATVEMSEAGRTAVVGKVV
+
+>>>NAME: 09_Alzheimers_Tau_Microtubule_Binding_Domain
+>>>SEQ: QTAPVPMPDLKNVRSKIGSTENLKHQPGGGKVQIINKKLDLSNVQSKCGSKDNIKHVPGGGSVQIVYKPVDFLSVSTSHYTGSQSTGSDTQDSKIGSTEVIKHQPGGGKVQIINKKLDLSNVQSKCGSKDNIKHVPGGG
+
+>>>NAME: 10_Duchenne_MD_Dystrophin_Actin_Binding
+>>>SEQ: MGAPHHPPPLPLPGLHQLHPTPQPRAQDSAPVSSSLEAALPPQYTLPPSPPETRDLKPGEPLSPPTHPIPDPATPDPVLPKPNGSWPKPPSAPMDPDVTPAVVPSPKGSEPEDRTPVPGTIPPRDPVPPKVLPEEVASGL
+
+>>>NAME: 11_Huntingtons_Huntingtin_N_Terminal
+>>>SEQ: MATLEKLMKAFESLKSFQQQQQQQQQQQQQQQQQQQTTAAGAHGPLPLPSAPTRHTVLSLPAEPLPDLPTPPGEVAGPGPPGWPLGAAPGPPAEGGLPAPEAPLPGAGPGLPDPADTGPGCDPAPGPALPPAPGPPEPG
+
+>>>NAME: 12_Glioblastoma_Mutant_p53_R175H
+>>>SEQ: SSSVPSQKTYQGSYGFRLGFLHSGTAKSVTCTYSPALNKMFCQLAKTCPVQLWVDSTPPPGTRVRAMAIYKQSQHMTEVVRRCPHHERCSDSDGLAPQNLIRVEGNLRVEYLDDRNTFRHSVVVPYEPPEVGSDCTTIHY
+
+>>>NAME: 13_Nipah_Virus_Matrix_Protein
+>>>SEQ: MGNIPNAGVSLPGSAQPIIITLTDVAAQILGAVLVCRAKGIQAGVSVTQGAPVSHRLDDAELQLDSDSLRVILNIAVSAFVTAATNIITTHVQALLHAGIQNPLKLESCSVYNSNISELVRGVVLACELTTDLLKSIYDTK
+
+>>>NAME: 14_Lassa_Fever_Virus_Nucleoprotein
+>>>SEQ: MDKPSLAEPLQKLPSPQSNLQDNMLDADYYSHNLKNGVDVTLQQHRLDAGDLLVRNSLYLQGAQRAHEVVDQLLNKEVWVLSALIKIWSTNDEKLYNAFLLQAVTDELAQAVKQQLIAGYLQDMDLSSSTDDTQLDIEKLL
+
+>>>NAME: 15_Chikungunya_nsP3_Macrodomain
+>>>SEQ: MEPTVQDAELQKLLDEFEREFDERELRALQQEREREDLARAFRAAERQQEMLNDAEERGRRALAEERLAEQRLAQEEEERQRRALAEERLAEQRLAQEEEERLAEERLAEQRLAQAEEEAQGRRSASPTLDEKVFVDSEQTMR
+
+>>>NAME: 16_Progeria_Progerin_LaminA_C_Terminal
+>>>SEQ: SGAQASSSSQKPVFGGNKCDPCNGVCNEPCLNRTLDSKSTSQKSCVKRSTPSVAQDSGSPANELTQGPSSSGELVNRATAGLDLSKSVLTSASALSASALSTSLSSSTSSSSTQSLSVLSRTELRTSLSSTSLTRTGSLT
+
+>>>NAME: 17_Aggressive_Cancers_c_Myc_Oncogene
+>>>SEQ: KRRTHNVLERQRRNELKRSFFALRDQIPELENNEKAPKVVILKKATAIAILTLQTLCSILIERTEQQNKLIQDVMKQSENTEDEEQEDGPTLRLPPSVGRVLDYDGQVPCSSSGDSDDEEDESIINLQDLQ
+
+>>>NAME: 18_Marburg_Virus_VP35
+>>>SEQ: MSDEELTEVTEQVDAGVSATGSSFLNTPWRRGTGPISLQDSLSASQGKQTFDLQSCSSALSNGIPDVPVMFSKTIKGTQHLLDSASTTNPVRSTDEPGNTTDDMVRKLSSTELPDNTTGNVVRQVLDSDNATEEPVVKQ
+
+>>>NAME: 19_Rett_Syndrome_MeCP2
+>>>SEQ: MAAAAQAQQKQRAKSGSAESTERRSRDSESVSASASSPGRGRGRPRAPPPKPSPRVLSQGEPRFIEYDAVMVRSNIGGAWEDDWRSPRATLGHVWSKLNPQPSLHRLTIWSDPSRAGAMENLIFLGYSTSPMSA
+
+>>>END TARGETS
+================================================================================
+
+NOTES ON EACH TARGET (human-readable context)
+================================================================================
+
+1.  Prion Disease / Fatal Familial Insomnia
+    - No cure or treatment can halt or reverse prion diseases.
+    - Goal: design a molecule that stabilizes normal PrP so it doesn't
+      misfold into toxic prions.
+
+2.  Osteogenesis Imperfecta (severe brittle bone disease)
+    - Caused by mutations in Type I Collagen; no drug fixes the defective
+      collagen, current treatments only manage symptoms.
+    - Sequence shown: pro-alpha 1 chain of human Type I collagen.
+
+3.  SARS-CoV-2 Omicron Spike (heavily mutated)
+    - Vaccines exist, but designing direct-acting small-molecule antivirals
+      against Omicron spike is very hard due to antibody-evasion mutations.
+    - Truncated to fit model length limits.
+
+4.  ALS (Lou Gehrig's disease) — Mutant SOD1
+    - Familial ALS is caused by toxic misfolding of SOD1.
+    - Only one approved drug (Riluzole) extends life by a few months; it
+      does not stop the disease.
+
+5.  Zika Virus NS5 RNA Polymerase
+    - Zika causes severe birth defects (microcephaly); no specific antiviral
+      or vaccine approved. NS5 is the primary viral replication enzyme.
+
+6.  Parkinson's Disease — Alpha-Synuclein
+    - No cure, no drug stops disease progression; current treatments only
+      temporarily replenish dopamine.
+    - Goal: stop Alpha-Synuclein misfolding into toxic Lewy bodies.
+
+7.  Rabies — Rabies Virus Nucleoprotein
+    - Once clinical symptoms appear, rabies is ~100% fatal; no drug cures
+      it after onset. Nucleoprotein is essential for viral replication.
+
+8.  Dengue Fever — NS2B/NS3 Protease
+    - Vaccine exists, but no specific direct-acting antiviral cures Dengue
+      once infected. NS2B/NS3 is the primary drug-design target.
+
+9.  Alzheimer's Disease — Tau Microtubule-Binding Domain
+    - No drug cures Alzheimer's or stops brain cell death. Misfolded Tau
+      accumulation into neurofibrillary tangles is a primary driver.
+
+10. Duchenne Muscular Dystrophy — Dystrophin Actin-Binding Domain
+    - No cure; gene therapies are extremely new, expensive, limited.
+    - A drug stabilizing the actin-binding domain could prevent muscle wasting.
+
+11. Huntington's Disease — Huntingtin N-Terminal
+    - Fatal, inherited brain disorder; zero cure, no treatments halt
+      progression. Caused by mutant Huntingtin misfolding/aggregation.
+
+12. Glioblastoma (aggressive brain cancer) — Mutant p53 (R175H)
+    - Almost universally fatal within ~15 months; no cure.
+    - Mutant p53 misfolds and loses tumor-suppressor function; restoring or
+      inhibiting it is highly sought after.
+
+13. Nipah Virus — Matrix Protein
+    - Highly fatal zoonotic virus (mortality up to 75%); no approved drug
+      or vaccine. Matrix protein drives viral assembly and budding.
+
+14. Lassa Fever — Lassa Virus Nucleoprotein
+    - Acute viral hemorrhagic illness endemic to West Africa; no specific
+      antiviral drug approved. Nucleoprotein protects viral RNA.
+
+15. Chikungunya — nsP3 Macrodomain
+    - Causes severe, debilitating joint pain lasting years; no cure or
+      specific antiviral. nsP3 macrodomain is critical for viral replication.
+
+16. Progeria — Progerin (Lamin A C-Terminal)
+    - Ultra-rare, fatal premature-aging disorder in children; no cure.
+    - Mutant Lamin A accumulates and destabilizes the cell nucleus.
+
+17. Aggressive Cancers — c-Myc Oncogene
+    - Deregulated in >50% of human cancers (incl. aggressive pancreatic
+      and brain cancers); considered "undruggable" for decades due to
+      lack of deep binding pockets.
+
+18. Marburg Virus — VP35 Protein
+    - Severe, often fatal hemorrhagic fever related to Ebola; no approved
+      vaccines or antiviral cures. VP35 blocks host innate immunity.
+
+19. Rett Syndrome — MeCP2 Protein
+    - Severe, rare neurodevelopmental disorder, primarily affects girls;
+    - No cure. Caused by MeCP2 mutations that disrupt gene regulation
+      in the brain.
+
+================================================================================
+TIPS
+================================================================================
+- Sequences are pre-cleaned: only the 20 standard amino-acid letters
+  (ACDEFGHIKLMNPQRSTVWY) are kept; everything else is filtered out by
+  customremedies.py automatically.
+
+- The model is greedy (argmax) and deterministic given the same checkpoint
+  + same input + same hardware. So re-running the same target should yield
+  an identical SELFIES and identical QED every time. If it doesn't, you
+  are feeding a different input — check the SHA1 fingerprint printed at
+  startup.
+
+- For very long sequences (>~250 AA), the model's positional encoding may
+  start to lose fidelity. If you get poor QED on a long target, try
+  splitting the protein into functional domains (~120-200 AA each).
+
+- After each run, look at the FINAL VERDICT block:
+      Drug-likeness score : N/8  (>=6 is promising)
+  Targets scoring >=6 are worth following up with docking / MD.
+
+================================================================================
